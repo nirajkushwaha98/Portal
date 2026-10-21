@@ -1,0 +1,31 @@
+{
+  "name": "placement-portal-server",
+  "version": "1.0.0",
+  "description": "REST API backend for College Placement Preparation Portal",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node src/seed/seedRunner.js",
+    "test": "node --test src/tests/*.test.js"
+  },
+  "keywords": ["placement", "portal", "express", "mongodb", "api"],
+  "author": "Placement Portal Team",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.9.5",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "mongodb-memory-server": "^10.1.3",
+    "supertest": "^7.0.0"
+  }
+}

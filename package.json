@@ -1,0 +1,24 @@
+{
+  "name": "placement-portal-root",
+  "version": "1.0.0",
+  "description": "Full-stack College Placement Preparation Portal",
+  "private": true,
+  "scripts": {
+    "install:all": "npm --prefix server install && npm --prefix client install",
+    "dev:server": "npm --prefix server run dev",
+    "dev:client": "npm --prefix client run dev",
+    "build:client": "npm --prefix client run build",
+    "seed": "npm --prefix server run seed",
+    "test": "npm --prefix server test",
+    "start:server": "npm --prefix server start"
+  },
+  "keywords": [
+    "placement",
+    "portal",
+    "react",
+    "express",
+    "mongodb"
+  ],
+  "author": "Placement Portal Team",
+  "license": "ISC"
+}
