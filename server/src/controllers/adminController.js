@@ -127,6 +127,13 @@ export const updateUserRole = async (req, res, next) => {
       });
     }
 
+    if (req.user._id.toString() === req.params.id && role !== 'admin') {
+      return res.status(400).json({
+        success: false,
+        message: 'You cannot revoke your own admin privileges.',
+      });
+    }
+
     const user = await User.findByIdAndUpdate(
       req.params.id,
       { role },

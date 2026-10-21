@@ -88,8 +88,10 @@ export const AdminTestsPage = () => {
           durationMinutes: full.durationMinutes,
           totalMarks: full.totalMarks,
           passingMarks: full.passingMarks,
-          difficulty: full.difficulty,
-          questions: full.questions.map((q) => q._id),
+          difficulty: full.difficulty || 'Medium',
+          questions: (full.questions || []).map((q) =>
+            typeof q === 'object' && q !== null ? q._id : q
+          ),
         });
         setModalOpen(true);
       }

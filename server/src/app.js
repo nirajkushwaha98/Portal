@@ -32,7 +32,7 @@ if (process.env.NODE_ENV !== 'test') {
 
 // Robust Dynamic CORS configuration
 const allowedOrigins = process.env.CLIENT_URL
-  ? process.env.CLIENT_URL.split(',').map((origin) => origin.trim())
+  ? process.env.CLIENT_URL.split(',').map((origin) => origin.trim().replace(/\/+$/, ''))
   : [
       'http://localhost:5173',
       'http://localhost:3000',
@@ -46,12 +46,22 @@ app.use(
       // Allow requests with no origin (like mobile apps, curl, postman, or server-to-server)
       if (!origin) return callback(null, true);
 
-      // Check if origin is explicitly allowed or matches a vercel preview subdomain
-      const isAllowed =
-        allowedOrigins.includes(origin) ||
-        origin.endsWith('.vercel.app') ||
-        origin.includes('localhost') ||
-        origin.includes('127.0.0.1');
+      const normalizedOrigin = origin.replace(/\/+$/, '');
+      let isAllowed = allowedOrigins.includes(normalizedOrigin);
+
+      if (!isAllowed) {
+        try {
+          const parsed = new URL(origin);
+          const hostname = parsed.hostname;
+          isAllowed =
+            hostname === 'localhost' ||
+            hostname === '127.0.0.1' ||
+            hostname.endsWith('.vercel.app') ||
+            hostname === 'vercel.app';
+        } catch {
+          isAllowed = false;
+        }
+      }
 
       if (isAllowed) {
         callback(null, true);

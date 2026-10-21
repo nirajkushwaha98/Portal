@@ -9,9 +9,13 @@ export const getJobs = async (req, res, next) => {
 
     const query = {};
 
-    // By default, non-admins only see Active jobs
-    if (status) {
-      query.status = status;
+    // Filter by status: if status is explicitly passed and not 'All'/'all', filter by it
+    // If status is 'All' or 'all' or empty string (admin viewing all), do not filter by status
+    // Default to 'Active' only if status parameter was omitted entirely
+    if (status !== undefined) {
+      if (status && status.toLowerCase() !== 'all') {
+        query.status = status;
+      }
     } else {
       query.status = 'Active';
     }

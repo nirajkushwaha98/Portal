@@ -57,7 +57,7 @@ export const AdminJobsPage = () => {
   const fetchJobs = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/jobs?limit=50&status='); // empty status = fetch both active and closed
+      const res = await api.get('/jobs?limit=50&status=all'); // fetch all jobs (active and closed) for admin
       if (res.data.success) {
         setJobs(res.data.jobs);
       }

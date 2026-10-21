@@ -55,7 +55,8 @@ export const getMockTestById = async (req, res, next) => {
     const isAdmin = req.user && req.user.role === 'admin';
 
     // If student, sanitize questions so correctOption and explanation are not leaked in network payload
-    const sanitizedQuestions = test.questions.map((q) => {
+    const validQuestions = (test.questions || []).filter(Boolean);
+    const sanitizedQuestions = validQuestions.map((q) => {
       const base = {
         _id: q._id,
         title: q.title,

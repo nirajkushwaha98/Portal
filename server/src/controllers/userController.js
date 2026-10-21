@@ -71,6 +71,13 @@ export const toggleProblemSolved = async (req, res, next) => {
   try {
     const { problemId } = req.params;
     const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (!Array.isArray(user.solvedProblems)) {
+      user.solvedProblems = [];
+    }
 
     const isSolved = user.solvedProblems.some(
       (id) => id.toString() === problemId.toString()
@@ -104,6 +111,13 @@ export const toggleSaveJob = async (req, res, next) => {
   try {
     const { jobId } = req.params;
     const user = await User.findById(req.user._id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    if (!Array.isArray(user.savedJobs)) {
+      user.savedJobs = [];
+    }
 
     const isSaved = user.savedJobs.some(
       (id) => id.toString() === jobId.toString()
@@ -138,6 +152,9 @@ export const getDashboardStats = async (req, res, next) => {
 
     // Fetch user with solved problems and saved jobs
     const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
 
     // Fetch all test attempts
     const attempts = await TestAttempt.find({ user: userId })

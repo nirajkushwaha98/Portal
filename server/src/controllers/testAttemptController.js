@@ -38,7 +38,9 @@ export const submitTest = async (req, res, next) => {
     const evaluatedAnswers = [];
     const categoryStats = {};
 
-    test.questions.forEach((q) => {
+    const validQuestions = (test.questions || []).filter(Boolean);
+
+    validQuestions.forEach((q) => {
       const qIdStr = q._id.toString();
       const studentAns = answerMap.get(qIdStr);
       const selectedOption = studentAns ? studentAns.selectedOption : null;
@@ -67,7 +69,7 @@ export const submitTest = async (req, res, next) => {
       }
     });
 
-    const totalQuestions = test.questions.length || 1;
+    const totalQuestions = validQuestions.length || 1;
     const totalMarks = test.totalMarks || 100;
     const score = Math.round((correctCount / totalQuestions) * totalMarks);
     const percentage = Math.round((correctCount / totalQuestions) * 100);
