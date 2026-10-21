@@ -4,6 +4,7 @@
   "description": "Full-stack College Placement Preparation Portal",
   "private": true,
   "scripts": {
+    "dev": "concurrently -n \"SERVER,CLIENT\" -c \"blue,green\" \"npm run dev:server\" \"npm run dev:client\",
     "install:all": "npm --prefix server install && npm --prefix client install",
     "dev:server": "npm --prefix server run dev",
     "dev:client": "npm --prefix client run dev",
@@ -20,5 +21,8 @@
     "mongodb"
   ],
   "author": "Placement Portal Team",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
 }
